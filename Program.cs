@@ -39,6 +39,10 @@ namespace swsleepWatchdog
                         {
                             System.Console.WriteLine("swsleepWatchdog: IndexOutOfRangeException: most likely the process already terminated");
                         }
+                        catch (InvalidOperationException)
+                        {
+                            System.Console.WriteLine("swsleepWatchdog: InvalidOperationException: most likely the process already terminated");
+                        }
                         System.Console.WriteLine("swsleepWatchdog: timeout: {0}", timeout);
 
                         DateTime endTime = p.StartTime + new TimeSpan(0, 0, (int)timeout);

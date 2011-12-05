@@ -15,6 +15,7 @@ namespace swsleepWatchdog
 
         static void Main(string[] args)
         {
+            Console.WriteLine("swsleepWatchdog: version 0.1");
             Console.WriteLine("swsleepWatchdog: invoke, entering infinite loop");
             while (true)
             {

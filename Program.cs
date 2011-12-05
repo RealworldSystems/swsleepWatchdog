@@ -15,13 +15,14 @@ namespace swsleepWatchdog
 
         static void Main(string[] args)
         {
-            Console.WriteLine("swsleepWatchdog: version 0.1");
+            Console.WriteLine("swsleepWatchdog: version 0.2");
             Console.WriteLine("swsleepWatchdog: invoke, entering infinite loop");
             while (true)
             {
                 foreach (Process p in Process.GetProcesses())
                 {
                     String s = p.ProcessName;
+                    DateTime endTime;
                     if (s == "swsleep")
                     {
                         Console.WriteLine("swsleepWatchdog: found a swsleep.exe process: PID=={0}, cmd=={1}",
@@ -31,22 +32,25 @@ namespace swsleepWatchdog
                         try
                         {
                             timeout = GetSwsleepTimeout(p);
+                            endTime = p.StartTime + new TimeSpan(0, 0, (int)timeout);
                         }
                         catch (FormatException)
                         {
                             System.Console.WriteLine("swsleepWatchdog: FormatException: something went wrong retrieving the timeout");
+                            break;
                         }
                         catch (IndexOutOfRangeException)
                         {
                             System.Console.WriteLine("swsleepWatchdog: IndexOutOfRangeException: most likely the process already terminated");
+                            break;
                         }
                         catch (InvalidOperationException)
                         {
                             System.Console.WriteLine("swsleepWatchdog: InvalidOperationException: most likely the process already terminated");
+                            break;
                         }
                         System.Console.WriteLine("swsleepWatchdog: timeout: {0}", timeout);
 
-                        DateTime endTime = p.StartTime + new TimeSpan(0, 0, (int)timeout);
                         System.Console.WriteLine("swsleepWatchdog: calculated end time {0}", endTime);
 
                         if (endTime < DateTime.Now)

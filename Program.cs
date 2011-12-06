@@ -14,8 +14,8 @@ namespace swsleepWatchdog
 
         static void Main(string[] args)
         {
-            Console.WriteLine("swsleepWatchdog: version 0.2");
-            Console.WriteLine("swsleepWatchdog: invoke, entering infinite loop");
+            Console.WriteLine("swsleepWatchdog: version 0.3");
+            Console.WriteLine("swsleepWatchdog: invoke, entering infinite loop (timeout={0} seconds)", watchdogTimeoutInSeconds);
             while (true)
             {
                 foreach (Process p in Process.GetProcesses())
@@ -64,10 +64,9 @@ namespace swsleepWatchdog
                     }
                 }
 
-                Console.WriteLine("swsleepWatchdog: going to sleep (timeout: {0} s.", watchdogTimeoutInSeconds);
                 Thread.Sleep(watchdogTimeoutInSeconds * 1000);
 
-                Console.WriteLine("swsleepWatchdog: woken up again");
+                Console.Write(".");
             }
         }
 

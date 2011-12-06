@@ -35,31 +35,31 @@ namespace swsleepWatchdog
                         }
                         catch (FormatException)
                         {
-                            System.Console.WriteLine("swsleepWatchdog: FormatException: something went wrong retrieving the timeout");
+                            Console.WriteLine("swsleepWatchdog: FormatException: something went wrong retrieving the timeout");
                             break;
                         }
                         catch (IndexOutOfRangeException)
                         {
-                            System.Console.WriteLine("swsleepWatchdog: IndexOutOfRangeException: most likely the process already terminated");
+                            Console.WriteLine("swsleepWatchdog: IndexOutOfRangeException: most likely the process already terminated");
                             break;
                         }
                         catch (InvalidOperationException)
                         {
-                            System.Console.WriteLine("swsleepWatchdog: InvalidOperationException: most likely the process already terminated");
+                            Console.WriteLine("swsleepWatchdog: InvalidOperationException: most likely the process already terminated");
                             break;
                         }
-                        System.Console.WriteLine("swsleepWatchdog: timeout: {0}", timeout);
+                        Console.WriteLine("swsleepWatchdog: timeout: {0}", timeout);
 
-                        System.Console.WriteLine("swsleepWatchdog: calculated end time {0}", endTime);
+                        Console.WriteLine("swsleepWatchdog: calculated end time {0}", endTime);
 
                         if (endTime < DateTime.Now)
                         {
-                            System.Console.WriteLine("swsleepWatchdog: swsleep.exe should have been ended, killing it");
+                            Console.WriteLine("swsleepWatchdog: swsleep.exe should have been ended, killing it");
                             p.Kill();
                         }
                         else
                         {
-                            System.Console.WriteLine("swsleepWatchdog: swsleep.exe has an end time in the future, keeping it running");
+                            Console.WriteLine("swsleepWatchdog: swsleep.exe has an end time in the future, keeping it running");
                         }
                     }
                 }

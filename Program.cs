@@ -14,7 +14,7 @@ namespace swsleepWatchdog
 
         static void Main(string[] args)
         {
-            Report("version 0.3");
+            Report("version 0.4");
             Report("invoke, entering infinite loop (timeout={0} seconds)", watchdogTimeoutInSeconds);
             while (true)
             {
@@ -66,7 +66,7 @@ namespace swsleepWatchdog
 
                 Thread.Sleep(watchdogTimeoutInSeconds * 1000);
 
-                Console.Write(".");
+                Console.Write("."); Console.Out.Flush();
             }
         }
 

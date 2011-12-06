@@ -14,8 +14,8 @@ namespace swsleepWatchdog
 
         static void Main(string[] args)
         {
-            Console.WriteLine("swsleepWatchdog: version 0.3");
-            Console.WriteLine("swsleepWatchdog: invoke, entering infinite loop (timeout={0} seconds)", watchdogTimeoutInSeconds);
+            Report("version 0.3");
+            Report("invoke, entering infinite loop (timeout={0} seconds)", watchdogTimeoutInSeconds);
             while (true)
             {
                 foreach (Process p in Process.GetProcesses())
@@ -24,7 +24,7 @@ namespace swsleepWatchdog
                     DateTime endTime;
                     if (s == "swsleep")
                     {
-                        Console.WriteLine("swsleepWatchdog: found a swsleep.exe process: PID=={0}, cmd=={1}",
+                        Report("found a swsleep.exe process: PID=={0}, cmd=={1}",
                             p.Id, p.ProcessName);
 
                         float timeout = 0;
@@ -35,31 +35,31 @@ namespace swsleepWatchdog
                         }
                         catch (FormatException)
                         {
-                            Console.WriteLine("swsleepWatchdog: FormatException: something went wrong retrieving the timeout");
+                            Report("FormatException: something went wrong retrieving the timeout");
                             break;
                         }
                         catch (IndexOutOfRangeException)
                         {
-                            Console.WriteLine("swsleepWatchdog: IndexOutOfRangeException: most likely the process already terminated");
+                            Report("IndexOutOfRangeException: most likely the process already terminated");
                             break;
                         }
                         catch (InvalidOperationException)
                         {
-                            Console.WriteLine("swsleepWatchdog: InvalidOperationException: most likely the process already terminated");
+                            Report("InvalidOperationException: most likely the process already terminated");
                             break;
                         }
-                        Console.WriteLine("swsleepWatchdog: timeout: {0}", timeout);
+                        Report("timeout: {0}", timeout);
 
-                        Console.WriteLine("swsleepWatchdog: calculated end time {0}", endTime);
+                        Report("calculated end time {0}", endTime);
 
                         if (endTime < DateTime.Now)
                         {
-                            Console.WriteLine("swsleepWatchdog: swsleep.exe should have been ended, killing it");
+                            Report("swsleep.exe should have been ended, killing it");
                             p.Kill();
                         }
                         else
                         {
-                            Console.WriteLine("swsleepWatchdog: swsleep.exe has an end time in the future, keeping it running");
+                            Report("swsleep.exe has an end time in the future, keeping it running");
                         }
                     }
                 }
@@ -68,6 +68,12 @@ namespace swsleepWatchdog
 
                 Console.Write(".");
             }
+        }
+
+        private static void Report(string msg, params Object[] args)
+        {
+            Console.Write("{0}: ", DateTime.Now);
+            Console.WriteLine("swsleepWatchdog: " + msg, args);
         }
 
         /// <summary>

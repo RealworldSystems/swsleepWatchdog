@@ -55,7 +55,15 @@ namespace swsleepWatchdog
                         if (endTime < DateTime.Now)
                         {
                             Report("swsleep.exe should have been ended, killing it");
-                            p.Kill();
+                            try
+                            {
+                                p.Kill();
+                            }
+                            catch (Win32Exception)
+                            {
+                                Report("Win32Exception: killing the process failed, most likely, the process is terminating (according to the MSDN docs");
+                                break;
+                            }
                         }
                         else
                         {

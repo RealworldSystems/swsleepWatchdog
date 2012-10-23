@@ -33,9 +33,10 @@ namespace swsleepWatchdog
                             timeout = GetSwsleepTimeout(p);
                             endTime = p.StartTime + new TimeSpan(0, 0, (int)timeout);
                         }
-                        catch (FormatException)
+                        catch (FormatException fe)
                         {
-                            Report("FormatException: something went wrong retrieving the timeout");
+                            Report("FormatException: something went wrong retrieving the timeout: {0}",
+                                fe.Message);
                             break;
                         }
                         catch (IndexOutOfRangeException)
@@ -91,7 +92,9 @@ namespace swsleepWatchdog
         /// <returns>the time out of the swsleep.exe process</returns>
         private static float GetSwsleepTimeout(Process swSleepProcess)
         {
-            string arg1 = GetProcessArgs(swSleepProcess).Split(' ')[1];
+            string args = GetProcessArgs(swSleepProcess);
+            string argv[] = args.Split(new char[] {' '}, StringSplitOptions.RemoveEmptyEntries);
+            string arg1 = argv[1];
             float timeout = float.Parse(arg1);
 
             return timeout;

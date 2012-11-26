@@ -62,7 +62,16 @@ namespace swsleepWatchdog
                             }
                             catch (Win32Exception)
                             {
-                                Report("Win32Exception: killing the process failed, most likely, the process is terminating (according to the MSDN docs");
+                                string msg = "Win32Exception: killing the process failed, most likely, " +
+                                    "the process is terminating (according to the MSDN docs)";
+                                Report(msg);
+                                break;
+                            }
+                            catch (InvalidOperationException)
+                            {
+                                string msg = "Win32Exception: killing the process failed, most likely, " +
+                                    "the process is terminating (this time according to our own testing results...)";
+                                Report(msg);
                                 break;
                             }
                         }

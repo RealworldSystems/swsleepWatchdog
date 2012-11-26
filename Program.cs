@@ -93,7 +93,7 @@ namespace swsleepWatchdog
         private static float GetSwsleepTimeout(Process swSleepProcess)
         {
             string args = GetProcessArgs(swSleepProcess);
-            string argv[] = args.Split(new char[] {' '}, StringSplitOptions.RemoveEmptyEntries);
+            string[] argv = args.Split(new char[] {' '}, StringSplitOptions.RemoveEmptyEntries);
             string arg1 = argv[1];
             float timeout = float.Parse(arg1);
 
